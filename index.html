@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="ResiNDart — авторские изделия из эпоксидной смолы." />
     <title>ResiNDart — изделия из эпоксидной смолы</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23132f32'/%3E%3Cpath d='M19 16h18c7 0 12 5 12 11 0 4-2 8-6 10 5 2 8 6 8 11 0 8-7 14-16 14H19V16Zm12 9v9h5c3 0 5-2 5-5s-2-4-5-4h-5Zm0 18v10h7c4 0 6-2 6-5s-3-5-6-5h-7Z' fill='%23d9b879'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="header">
-      <a class="brand" href="#top" aria-label="ResiNDart, главная">Resi<span>N</span>Dart</a>
+      <a class="brand" href="index.html#top" aria-label="ResiNDart, главная">Resi<span>ND</span>art</a>
       <nav aria-label="Основная навигация">
-        <a href="#catalog">Каталог</a>
+        <a href="catalog.html">Каталог</a>
         <a href="#about">О мастере</a>
         <a href="#contacts">Контакты</a>
       </nav>
-      <a class="header-link" href="#catalog">Смотреть изделия</a>
     </header>
 
     <main id="top">
@@ -24,45 +23,30 @@
         <img src="assets/hero-resin.png" alt="Демонстрационная композиция изделий из эпоксидной смолы" />
         <div class="hero-shade"></div>
         <div class="hero-copy">
-          <p class="eyebrow">Авторская мастерская</p>
-          <h1 id="hero-title">Смола, в которой<br />остаётся свет</h1>
-          <p class="lead">Предметы для дома, созданные вручную. Каждый рисунок неповторим.</p>
-          <a class="button" href="#catalog">Выбрать настроение</a>
+          <p class="eyebrow">ИЗДЕЛИЯ ИЗ ЭПОКСИДНОЙ СМОЛЫ</p>
+          <h1 id="hero-title">Красота — в привычных<br />вещах</h1>
+          <p class="lead">Часы, подносы, столики и декор из дерева и эпоксидной смолы. Есть готовые работы и изделия на заказ.</p>
+          <a class="button" href="catalog.html">Смотреть изделия</a>
         </div>
-        <p class="hero-note">Визуальная концепция. Фото изделий появятся здесь после съёмки.</p>
       </section>
 
       <section class="intro" id="about">
-        <p class="eyebrow">ResiNDart</p>
         <div>
-          <h2>Изделие не повторится дважды</h2>
-          <p>Здесь будет история Дарьи Николаенко и мастерской: о внимании к деталям, безопасных материалах и работе по индивидуальным эскизам.</p>
+          <h2>Как создаются изделия</h2>
+          <p>Основа — натуральное дерево и эпоксидная смола. Сначала подбираются форма, оттенки и фактура, затем смола заливается слоями и оставляется до полного застывания. После этого поверхность шлифуется и полируется вручную.</p>
+          <p>В результате получается не просто декор, а предмет для дома: поднос, часы, столик или картина в нужной палитре и размере. Каждая заливка имеет свой рисунок.</p>
         </div>
       </section>
 
-      <section class="catalog" id="catalog" aria-labelledby="catalog-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Демонстрационный каталог</p>
-            <h2 id="catalog-title">Найдите свой предмет</h2>
-          </div>
-          <p>Названия, характеристики и цены пока используются для демонстрации. После фотосъёмки их заменят реальные изделия.</p>
+      <section class="catalog-preview" aria-labelledby="catalog-preview-title">
+        <img class="catalog-preview-image" src="assets/catalog-resin.png" alt="Столик, сервировочная доска и подставки из дерева и эпоксидной смолы" />
+        <div class="catalog-preview-shade"></div>
+        <div class="catalog-preview-copy">
+          <p class="eyebrow">Каталог</p>
+          <h2 id="catalog-preview-title">Выберите изделие для дома</h2>
+          <p>Часы, подносы, столики, картины и другой декор из дерева и эпоксидной смолы.</p>
+          <a class="button" href="catalog.html">Открыть каталог</a>
         </div>
-        <div class="catalog-toolbar" aria-label="Фильтр каталога">
-          <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">Все</button>
-          <button class="filter" type="button" data-filter="clock" aria-pressed="false">Часы</button>
-          <button class="filter" type="button" data-filter="decor" aria-pressed="false">Посуда и декор</button>
-          <button class="filter" type="button" data-filter="table" aria-pressed="false">Столы</button>
-          <button class="filter" type="button" data-filter="art" aria-pressed="false">Картины</button>
-        </div>
-        <p class="catalog-count" aria-live="polite"><span id="catalog-count">12</span> изделий</p>
-        <div class="product-grid" id="product-grid"></div>
-      </section>
-
-      <section class="availability">
-        <p class="eyebrow">В наличии</p>
-        <h2>Скоро здесь появятся готовые работы</h2>
-        <p>Раздел для тех, кто хочет выбрать изделие без ожидания изготовления.</p>
       </section>
 
       <section class="order-section" id="contacts" aria-labelledby="order-title">

@@ -7,7 +7,7 @@ const grid = document.querySelector("#product-grid");
 const count = document.querySelector("#catalog-count");
 const filters = [...document.querySelectorAll(".filter")];
 const dialog = document.querySelector("#product-dialog");
-const closeButton = dialog.querySelector(".dialog-close");
+const closeButton = dialog?.querySelector(".dialog-close");
 const discussOrder = document.querySelector("#discuss-order");
 const orderForm = document.querySelector("#order-form");
 const orderCategory = document.querySelector("#order-category");
@@ -67,6 +67,7 @@ function productCard(product) {
 }
 
 function render(category = "all") {
+  if (!grid || !count) return;
   const published = products.filter((product) => product.published !== false);
   const visible = category === "all" ? published : published.filter((product) => product.category === category);
   grid.innerHTML = visible.map(productCard).join("");
@@ -99,24 +100,24 @@ filters.forEach((button) => button.addEventListener("click", () => {
   render(button.dataset.filter);
 }));
 
-grid.addEventListener("click", (event) => {
+grid?.addEventListener("click", (event) => {
   const card = event.target.closest(".product-card");
   if (!card) return;
   openProduct(products.find((product) => product.id === Number(card.dataset.id)));
 });
 
-closeButton.addEventListener("click", () => dialog.close());
-dialog.addEventListener("click", (event) => {
+closeButton?.addEventListener("click", () => dialog.close());
+dialog?.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
 });
-discussOrder.addEventListener("click", () => {
+discussOrder?.addEventListener("click", () => {
   dialog.close();
-  if (!selectedProduct) return;
+  if (!selectedProduct || !orderCategory || !orderMessage) return;
   orderCategory.value = selectedProduct.category;
   orderMessage.value = `Интересует изделие «${selectedProduct.name}». `;
 });
 
-orderForm.addEventListener("submit", (event) => {
+orderForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!orderForm.checkValidity()) {
     orderForm.reportValidity();
@@ -126,7 +127,7 @@ orderForm.addEventListener("submit", (event) => {
   formSuccess.hidden = false;
 });
 
-newRequest.addEventListener("click", () => {
+newRequest?.addEventListener("click", () => {
   orderForm.reset();
   formSuccess.hidden = true;
   orderForm.hidden = false;
