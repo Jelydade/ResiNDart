@@ -69,11 +69,11 @@
         <div class="order-intro">
           <p class="eyebrow">Заказать изделие</p>
           <h2 id="order-title">Расскажите о своей идее</h2>
-          <p>Оставьте удобный способ связи и несколько слов о будущем изделии. После согласования контактов эта форма будет отправлять заявки мастеру.</p>
+          <p>Опишите будущую работу, а затем напишите мастеру в удобном мессенджере или позвоните.</p>
           <ol class="order-steps">
             <li><span>01</span>Выберите направление</li>
             <li><span>02</span>Опишите пожелания</li>
-            <li><span>03</span>Получите расчёт</li>
+            <li><span>03</span>Напишите мастеру</li>
           </ol>
         </div>
 
@@ -84,6 +84,7 @@
               <label>Как связаться
                 <select name="contact-method" id="contact-method">
                   <option value="telegram">Telegram</option>
+                  <option value="max">MAX</option>
                   <option value="whatsapp">WhatsApp</option>
                   <option value="phone">Телефон</option>
                   <option value="email">Электронная почта</option>
@@ -103,14 +104,20 @@
             <label>Пожелания<textarea name="message" id="order-message" rows="4" placeholder="Цвет, размер, назначение или изделие, которое вам понравилось"></textarea></label>
             <label class="consent"><input type="checkbox" name="consent" required /><span>Согласен(на) на обработку указанных данных для обратной связи.</span></label>
             <div class="form-actions">
-              <button class="button form-submit" type="submit">Отправить заявку</button>
-              <span>Демонстрационная форма — данные никуда не отправляются.</span>
+              <button class="button form-submit" type="submit">Продолжить</button>
+              <span>Данные не отправляются автоматически: вы сможете написать мастеру лично.</span>
             </div>
           </form>
           <div class="form-success" id="form-success" role="status" hidden>
-            <span>Заявка заполнена</span>
-            <h3>Спасибо за вашу идею</h3>
-            <p>Сейчас это демонстрация. После подключения формы мастер получит заявку и свяжется с вами удобным способом.</p>
+            <span>Следующий шаг</span>
+            <h3>Выберите способ связи</h3>
+            <p>Пожелания заполнены. Напишите мастеру в удобном мессенджере или позвоните, чтобы обсудить детали.</p>
+            <div class="messenger-links" aria-label="Связаться с мастером">
+              <a class="messenger-link messenger-link--telegram" href="https://t.me/chernovol_nv" target="_blank" rel="noopener noreferrer">Telegram <small>@chernovol_nv</small></a>
+              <a class="messenger-link messenger-link--max" href="https://max.ru/u/f9LHodD0cOJrZF56DgN7M1yh8XS_LlQDGIhnVbQKnljVJfOO5ji94QEIiWY" target="_blank" rel="noopener noreferrer">MAX <small>Написать мастеру</small></a>
+              <span class="messenger-link is-disabled">WhatsApp <small>нужен номер телефона</small></span>
+              <span class="messenger-link is-disabled">Позвонить <small>нужен номер телефона</small></span>
+            </div>
             <button class="text-button" id="new-request" type="button">Заполнить ещё раз</button>
           </div>
         </div>
