@@ -43,17 +43,20 @@
       <section class="catalog" id="catalog" aria-labelledby="catalog-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Будущий каталог</p>
-            <h2 id="catalog-title">Выберите направление</h2>
+            <p class="eyebrow">Демонстрационный каталог</p>
+            <h2 id="catalog-title">Найдите свой предмет</h2>
           </div>
-          <p>Каждая карточка пока работает как заглушка: позднее здесь появятся реальные фотографии, описание и стоимость.</p>
+          <p>Названия, характеристики и цены пока используются для демонстрации. После фотосъёмки их заменят реальные изделия.</p>
         </div>
-        <div class="category-grid">
-          <article class="category category--clock"><span>01</span><h3>Часы</h3><p>Фото и стоимость готовятся</p></article>
-          <article class="category category--home"><span>02</span><h3>Посуда и декор</h3><p>Тарелки, этажерки, салфетницы</p></article>
-          <article class="category category--table"><span>03</span><h3>Столы</h3><p>Авторские акценты для интерьера</p></article>
-          <article class="category category--art"><span>04</span><h3>Картины</h3><p>Сюжеты в глубине смолы</p></article>
+        <div class="catalog-toolbar" aria-label="Фильтр каталога">
+          <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">Все</button>
+          <button class="filter" type="button" data-filter="clock" aria-pressed="false">Часы</button>
+          <button class="filter" type="button" data-filter="decor" aria-pressed="false">Посуда и декор</button>
+          <button class="filter" type="button" data-filter="table" aria-pressed="false">Столы</button>
+          <button class="filter" type="button" data-filter="art" aria-pressed="false">Картины</button>
         </div>
+        <p class="catalog-count" aria-live="polite"><span id="catalog-count">12</span> изделий</p>
+        <div class="product-grid" id="product-grid"></div>
       </section>
 
       <section class="availability">
@@ -68,6 +71,24 @@
       </section>
     </main>
 
+    <dialog class="product-dialog" id="product-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" type="button" aria-label="Закрыть карточку">×</button>
+      <div class="dialog-visual" id="dialog-visual"><span>Фото готовится</span></div>
+      <div class="dialog-copy">
+        <p class="eyebrow" id="dialog-category"></p>
+        <h2 id="dialog-title"></h2>
+        <p class="dialog-description" id="dialog-description"></p>
+        <dl>
+          <div><dt>Размер</dt><dd id="dialog-size"></dd></div>
+          <div><dt>Изготовление</dt><dd id="dialog-time"></dd></div>
+          <div><dt>Статус</dt><dd id="dialog-status"></dd></div>
+        </dl>
+        <div class="dialog-bottom"><strong id="dialog-price"></strong><a class="button" href="#contacts" id="discuss-order">Обсудить заказ</a></div>
+        <small>Демонстрационная карточка. Данные будут уточнены.</small>
+      </div>
+    </dialog>
+
     <footer>© ResiNDart <span>Временная версия сайта</span></footer>
+    <script src="script.js"></script>
   </body>
 </html>
