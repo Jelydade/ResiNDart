@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Каталог изделий ResiNDart из эпоксидной смолы." />
+    <title>Каталог — ResiNDart</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a class="brand" href="index.html#top" aria-label="ResiNDart, главная">Resi<span>ND</span>art</a>
+      <nav aria-label="Основная навигация">
+        <a href="catalog.html" aria-current="page">Каталог</a>
+        <a href="index.html#about">О мастере</a>
+        <a href="index.html#contacts">Контакты</a>
+      </nav>
+      <a class="header-link" href="index.html#contacts">Заказать изделие</a>
+    </header>
+
+    <main>
+      <section class="catalog-page-header" aria-labelledby="catalog-page-title">
+        <p class="eyebrow">Каталог</p>
+        <h1 id="catalog-page-title">Изделия для дома</h1>
+        <p>Выберите готовую работу или найдите идею для индивидуального заказа.</p>
+      </section>
+
+      <section class="catalog" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Все изделия</p>
+            <h2 id="catalog-title">Найдите свой предмет</h2>
+          </div>
+        </div>
+        <div class="catalog-toolbar" aria-label="Фильтр каталога">
+          <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">Все</button>
+          <button class="filter" type="button" data-filter="clock" aria-pressed="false">Часы</button>
+          <button class="filter" type="button" data-filter="decor" aria-pressed="false">Посуда и декор</button>
+          <button class="filter" type="button" data-filter="table" aria-pressed="false">Столы</button>
+          <button class="filter" type="button" data-filter="art" aria-pressed="false">Картины</button>
+        </div>
+        <p class="catalog-count" aria-live="polite"><span id="catalog-count">12</span> изделий</p>
+        <div class="product-grid" id="product-grid"></div>
+      </section>
+    </main>
+
+    <dialog class="product-dialog" id="product-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" type="button" aria-label="Закрыть карточку">×</button>
+      <div class="dialog-visual" id="dialog-visual"><span>Фото готовится</span></div>
+      <div class="dialog-copy">
+        <p class="eyebrow" id="dialog-category"></p>
+        <h2 id="dialog-title"></h2>
+        <p class="dialog-description" id="dialog-description"></p>
+        <dl>
+          <div><dt>Размер</dt><dd id="dialog-size"></dd></div>
+          <div><dt>Изготовление</dt><dd id="dialog-time"></dd></div>
+          <div><dt>Статус</dt><dd id="dialog-status"></dd></div>
+        </dl>
+        <div class="dialog-bottom"><strong id="dialog-price"></strong><a class="button" href="index.html#contacts" id="discuss-order">Обсудить заказ</a></div>
+      </div>
+    </dialog>
+
+    <footer>© ResiNDart <span>Временная версия сайта</span></footer>
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

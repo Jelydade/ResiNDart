@@ -10,13 +10,13 @@
   </head>
   <body>
     <header class="header">
-      <a class="brand" href="#top" aria-label="ResiNDart, главная">Resi<span>ND</span>art</a>
+      <a class="brand" href="index.html#top" aria-label="ResiNDart, главная">Resi<span>ND</span>art</a>
       <nav aria-label="Основная навигация">
-        <a href="#catalog">Каталог</a>
+        <a href="catalog.html">Каталог</a>
         <a href="#about">О мастере</a>
         <a href="#contacts">Контакты</a>
       </nav>
-      <a class="header-link" href="#catalog">Смотреть изделия</a>
+      <a class="header-link" href="catalog.html">Смотреть изделия</a>
     </header>
 
     <main id="top">
@@ -27,7 +27,7 @@
           <p class="eyebrow">ИЗДЕЛИЯ ИЗ ЭПОКСИДНОЙ СМОЛЫ</p>
           <h1 id="hero-title">Красота — в привычных<br />вещах</h1>
           <p class="lead">Часы, подносы, столики и декор из дерева и эпоксидной смолы. Есть готовые работы и изделия на заказ.</p>
-          <a class="button" href="#catalog">Смотреть изделия</a>
+          <a class="button" href="catalog.html">Смотреть изделия</a>
         </div>
       </section>
 
@@ -39,22 +39,15 @@
         </div>
       </section>
 
-      <section class="catalog" id="catalog" aria-labelledby="catalog-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Каталог</p>
-            <h2 id="catalog-title">Найдите свой предмет</h2>
-          </div>
+      <section class="catalog-preview" aria-labelledby="catalog-preview-title">
+        <div>
+          <p class="eyebrow">Каталог</p>
+          <h2 id="catalog-preview-title">Выберите изделие для дома</h2>
         </div>
-        <div class="catalog-toolbar" aria-label="Фильтр каталога">
-          <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">Все</button>
-          <button class="filter" type="button" data-filter="clock" aria-pressed="false">Часы</button>
-          <button class="filter" type="button" data-filter="decor" aria-pressed="false">Посуда и декор</button>
-          <button class="filter" type="button" data-filter="table" aria-pressed="false">Столы</button>
-          <button class="filter" type="button" data-filter="art" aria-pressed="false">Картины</button>
+        <div>
+          <p>Часы, подносы, столики, картины и другой декор из дерева и эпоксидной смолы.</p>
+          <a class="button" href="catalog.html">Открыть каталог</a>
         </div>
-        <p class="catalog-count" aria-live="polite"><span id="catalog-count">12</span> изделий</p>
-        <div class="product-grid" id="product-grid"></div>
       </section>
 
       <section class="order-section" id="contacts" aria-labelledby="order-title">
