@@ -65,9 +65,55 @@
         <p>Раздел для тех, кто хочет выбрать изделие без ожидания изготовления.</p>
       </section>
 
-      <section class="contact-preview" id="contacts">
-        <div><p class="eyebrow">Заказать изделие</p><h2>Расскажите о своей идее</h2></div>
-        <div><p>Контакты, ссылки на мессенджеры и форма заявки появятся после их согласования.</p><a class="text-link" href="#top">Вернуться наверх</a></div>
+      <section class="order-section" id="contacts" aria-labelledby="order-title">
+        <div class="order-intro">
+          <p class="eyebrow">Заказать изделие</p>
+          <h2 id="order-title">Расскажите о своей идее</h2>
+          <p>Оставьте удобный способ связи и несколько слов о будущем изделии. После согласования контактов эта форма будет отправлять заявки мастеру.</p>
+          <ol class="order-steps">
+            <li><span>01</span>Выберите направление</li>
+            <li><span>02</span>Опишите пожелания</li>
+            <li><span>03</span>Получите расчёт</li>
+          </ol>
+        </div>
+
+        <div class="order-panel">
+          <form class="order-form" id="order-form" novalidate>
+            <div class="form-row">
+              <label>Ваше имя *<input type="text" name="name" autocomplete="name" required /></label>
+              <label>Как связаться
+                <select name="contact-method" id="contact-method">
+                  <option value="telegram">Telegram</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="phone">Телефон</option>
+                  <option value="email">Электронная почта</option>
+                </select>
+              </label>
+            </div>
+            <label>Контакт *<input type="text" name="contact" placeholder="@username или +7 900 000-00-00" autocomplete="tel" required /></label>
+            <label>Что вас интересует
+              <select name="category" id="order-category">
+                <option value="">Пока не решил(а)</option>
+                <option value="clock">Часы</option>
+                <option value="decor">Посуда и декор</option>
+                <option value="table">Стол</option>
+                <option value="art">Картина</option>
+              </select>
+            </label>
+            <label>Пожелания<textarea name="message" id="order-message" rows="4" placeholder="Цвет, размер, назначение или изделие, которое вам понравилось"></textarea></label>
+            <label class="consent"><input type="checkbox" name="consent" required /><span>Согласен(на) на обработку указанных данных для обратной связи.</span></label>
+            <div class="form-actions">
+              <button class="button form-submit" type="submit">Отправить заявку</button>
+              <span>Демонстрационная форма — данные никуда не отправляются.</span>
+            </div>
+          </form>
+          <div class="form-success" id="form-success" role="status" hidden>
+            <span>Заявка заполнена</span>
+            <h3>Спасибо за вашу идею</h3>
+            <p>Сейчас это демонстрация. После подключения формы мастер получит заявку и свяжется с вами удобным способом.</p>
+            <button class="text-button" id="new-request" type="button">Заполнить ещё раз</button>
+          </div>
+        </div>
       </section>
     </main>
 

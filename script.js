@@ -19,6 +19,12 @@ const filters = [...document.querySelectorAll(".filter")];
 const dialog = document.querySelector("#product-dialog");
 const closeButton = dialog.querySelector(".dialog-close");
 const discussOrder = document.querySelector("#discuss-order");
+const orderForm = document.querySelector("#order-form");
+const orderCategory = document.querySelector("#order-category");
+const orderMessage = document.querySelector("#order-message");
+const formSuccess = document.querySelector("#form-success");
+const newRequest = document.querySelector("#new-request");
+let selectedProduct;
 
 function productCard(product) {
   return `
@@ -43,6 +49,7 @@ function render(category = "all") {
 }
 
 function openProduct(product) {
+  selectedProduct = product;
   const dialogVisual = document.querySelector("#dialog-visual");
   dialogVisual.classList.toggle("has-photo", Boolean(product.image));
   dialogVisual.innerHTML = product.image
@@ -77,6 +84,28 @@ closeButton.addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
 });
-discussOrder.addEventListener("click", () => dialog.close());
+discussOrder.addEventListener("click", () => {
+  dialog.close();
+  if (!selectedProduct) return;
+  orderCategory.value = selectedProduct.category;
+  orderMessage.value = `Интересует изделие «${selectedProduct.name}». `;
+});
+
+orderForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!orderForm.checkValidity()) {
+    orderForm.reportValidity();
+    return;
+  }
+  orderForm.hidden = true;
+  formSuccess.hidden = false;
+});
+
+newRequest.addEventListener("click", () => {
+  orderForm.reset();
+  formSuccess.hidden = true;
+  orderForm.hidden = false;
+  orderForm.elements.name.focus();
+});
 
 render();
