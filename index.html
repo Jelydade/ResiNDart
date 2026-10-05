@@ -14,6 +14,8 @@
       <nav aria-label="Основная навигация">
         <a href="catalog.html">Каталог</a>
         <a href="#about">О мастере</a>
+        <a href="#works">Работы</a>
+        <a href="#faq">Вопросы</a>
         <a href="#contacts">Контакты</a>
       </nav>
     </header>
@@ -31,10 +33,85 @@
       </section>
 
       <section class="intro" id="about">
-        <div>
-          <h2>Как создаются изделия</h2>
-          <p>Основа — натуральное дерево и эпоксидная смола. Сначала подбираются форма, оттенки и фактура, затем смола заливается слоями и оставляется до полного застывания. После этого поверхность шлифуется и полируется вручную.</p>
-          <p>В результате получается не просто декор, а предмет для дома: поднос, часы, столик или картина в нужной палитре и размере. Каждая заливка имеет свой рисунок.</p>
+        <div class="about-layout">
+          <figure class="about-video">
+            <video controls playsinline preload="metadata" aria-label="Видео из мастерской Дарьи Николаенко">
+              <source src="assets/about-daria-resin.mp4" type="video/mp4" />
+              Ваш браузер не поддерживает видео. <a href="assets/about-daria-resin.mp4">Открыть видео</a>.
+            </video>
+            <figcaption>Небольшой фрагмент из мастерской</figcaption>
+          </figure>
+          <div class="about-copy">
+            <p class="eyebrow">Обо мне</p>
+            <h2>Знакомство<br />с мастером</h2>
+            <p>Меня зовут Николаенко Дарья, и я мастер по работе с эпоксидной смолой. Моя история началась с простого эксперимента дома, а переросла в настоящее ремесло. Я не просто заливаю смолу — я продумываю каждый слой, цвет и форму, чтобы в итоге получилась вещь с характером.</p>
+            <p>В числе моих работ — часы, картины, этажерки, шахматы и столешницы. При работе я использую только проверенные материалы, чтобы готовое изделие было прочным и безопасным. Для меня важна не только эстетика, но и практичность.</p>
+            <p>Я всегда консультируюсь с заказчиком, уточняю размеры, оттенки и назначение будущего предмета интерьера. Моя цель — создавать вещи, которые будут радовать вас долгие годы. Если у вас есть идея — я с радостью воплощу её в жизнь.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="works" id="works" aria-labelledby="works-title">
+        <div class="works-heading">
+          <p class="eyebrow">Примеры работ</p>
+          <h2 id="works-title">Работы, созданные вручную</h2>
+          <p>Форма, оттенки и детали всегда можно адаптировать под ваш интерьер или идею подарка.</p>
+        </div>
+
+        <div class="works-slider" role="region" aria-roledescription="карусель" aria-label="Примеры работ">
+          <div class="works-viewport">
+            <div class="works-track" id="works-track">
+              <article class="work-slide" aria-roledescription="слайд" aria-label="1 из 11">
+                <div class="work-image"><img src="assets/work-tiered-stand.jpg" alt="Белая трёхъярусная этажерка из эпоксидной смолы с золотым декором" /></div>
+                <div class="work-copy"><span>01 / Этажерка</span><p>Трёхъярусная этажерка с нежным перламутровым рисунком, золотой окантовкой и акцентом из декоративной крошки.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="2 из 11">
+                <div class="work-image"><img src="assets/work-emerald-chess.jpg" alt="Шахматы из зелёной эпоксидной смолы с золотыми деталями" loading="lazy" /></div>
+                <div class="work-copy"><span>02 / Шахматы</span><p>Шахматная доска с глубоким зелёным оттенком, золотыми акцентами и объёмными фигурами ручной работы.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="3 из 11">
+                <div class="work-image"><img src="assets/work-emerald-clock.jpg" alt="Настенные часы из зелёной эпоксидной смолы с золотым декором" loading="lazy" /></div>
+                <div class="work-copy"><span>03 / Часы</span><p>Настенные часы с малахитовым рисунком, золотой геометрией и выразительным рельефом смолы.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="4 из 11">
+                <div class="work-image"><img src="assets/work-blue-clock.jpg" alt="Часы в бело-голубой гамме с золотыми римскими цифрами" loading="lazy" /></div>
+                <div class="work-copy"><span>04 / Часы</span><p>Крупные часы с плавными бело-голубыми переливами, перламутровым декором и золотыми цифрами.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="5 из 11">
+                <div class="work-image"><img src="assets/work-rose-trays.jpg" alt="Набор розовых подносов из эпоксидной смолы с золотым декором" loading="lazy" /></div>
+                <div class="work-copy"><span>05 / Подносы</span><p>Набор подносов с мягким розовым градиентом, сияющей серединой и декоративными камнями по краю.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="6 из 11">
+                <div class="work-image"><img src="assets/work-violet-stand.jpg" alt="Сиреневая трёхъярусная этажерка из эпоксидной смолы" loading="lazy" /></div>
+                <div class="work-copy"><span>06 / Этажерка</span><p>Ярусная этажерка в оттенках фиолетового с кристаллическими деталями и серебристой окантовкой.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="7 из 11">
+                <div class="work-image"><img src="assets/work-silver-tray.jpg" alt="Серебристый поднос из эпоксидной смолы с цветочным узором" loading="lazy" /></div>
+                <div class="work-copy"><span>07 / Поднос</span><p>Крупный сервировочный поднос с контрастным цветочным рисунком и сияющим центром из декоративной крошки.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="8 из 11">
+                <div class="work-image"><img src="assets/work-deer-ornament.jpg" alt="Новогоднее украшение в форме оленя из красной эпоксидной смолы" loading="lazy" /></div>
+                <div class="work-copy"><span>08 / Декор</span><p>Ёлочное украшение с глубоким винным цветом, золотым глиттером и выразительным силуэтом.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="9 из 11">
+                <div class="work-image"><img src="assets/work-gold-tray.jpg" alt="Белый поднос из эпоксидной смолы с золотыми деталями" loading="lazy" /></div>
+                <div class="work-copy"><span>09 / Поднос</span><p>Лаконичный белый поднос с мягким перламутровым переливом, золотой кромкой и россыпью фольги.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="10 из 11">
+                <div class="work-image"><img src="assets/work-serving-set.jpg" alt="Набор белых подносов и деревянная сервировочная доска с эпоксидной смолой" loading="lazy" /></div>
+                <div class="work-copy"><span>10 / Набор</span><p>Подносы и сервировочная доска в спокойной светлой палитре с золотыми акцентами и природной фактурой.</p></div>
+              </article>
+              <article class="work-slide" aria-roledescription="слайд" aria-label="11 из 11">
+                <div class="work-image"><img src="assets/work-cream-stand.jpg" alt="Кремовая трёхъярусная этажерка с золотыми деталями" loading="lazy" /></div>
+                <div class="work-copy"><span>11 / Этажерка</span><p>Нежная этажерка с золотой фурнитурой, перламутровой смолой и деликатным декором для сервировки.</p></div>
+              </article>
+            </div>
+          </div>
+          <div class="works-controls">
+            <button class="work-arrow" type="button" id="work-prev" aria-label="Предыдущая работа"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg></button>
+            <p id="works-count" aria-live="polite">01 / 11</p>
+            <button class="work-arrow" type="button" id="work-next" aria-label="Следующая работа"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></button>
+          </div>
         </div>
       </section>
 
@@ -46,6 +123,67 @@
           <h2 id="catalog-preview-title">Выберите изделие для дома</h2>
           <p>Часы, подносы, столики, картины и другой декор из дерева и эпоксидной смолы.</p>
           <a class="button" href="catalog.html">Открыть каталог</a>
+        </div>
+      </section>
+
+      <section class="faq" id="faq" aria-labelledby="faq-title">
+        <div class="faq-heading">
+          <p class="eyebrow">Частые вопросы</p>
+          <h2 id="faq-title">Важное перед заказом</h2>
+          <p>Если не нашли ответ, опишите свою идею в заявке — я помогу выбрать материалы, форму и детали будущего изделия.</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Как сделать заказ?</summary>
+            <div class="faq-answer">
+              <p>Оформить заказ очень просто:</p>
+              <ol>
+                <li>Выберите готовое изделие в каталоге или пришлите фото-референс, эскиз либо просто опишите идею словами.</li>
+                <li>Напишите в мессенджер или оставьте заявку на сайте. Укажите желаемые размеры, цветовую гамму, декор — сухоцветы, камни, надписи — и предпочтительный срок готовности.</li>
+                <li>Я свяжусь с вами, чтобы уточнить детали, рассчитать стоимость и согласовать срок изготовления.</li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Есть ли предоплата?</summary>
+            <div class="faq-answer">
+              <p>Да, для изделий по индивидуальному заказу требуется предоплата — <strong>50% от стоимости изделия</strong>.</p>
+              <p>Оставшаяся сумма оплачивается после изготовления и перед отправкой. Предоплата закрепляет за вами материалы и срок производства, а вам даёт уверенность, что изделие будет создано именно для вас.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Сколько времени занимает создание изделия?</summary>
+            <div class="faq-answer">
+              <p>На срок влияют сложность и размер изделия, а также текущая очередь. Стандартные изделия — например, часы и картины — изготавливаются <strong>за 15–20 дней</strong> с момента оформления и внесения предоплаты.</p>
+              <p>Точный срок согласовывается индивидуально при оформлении заказа.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Как осуществляется доставка?</summary>
+            <div class="faq-answer">
+              <p>Перед отправкой каждое изделие надёжно упаковывается, чтобы доехать в идеальном состоянии.</p>
+              <p>Отправляю по всей России через СДЭК, Почту России, 5Post или Яндекс — вы выбираете удобный вариант. После передачи заказа в транспортную компанию отправлю трек-номер для отслеживания.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Как ухаживать за изделиями?</summary>
+            <div class="faq-answer">
+              <p>Чтобы изделие надолго сохранило внешний вид:</p>
+              <ul>
+                <li>избегайте длительного воздействия прямых солнечных лучей;</li>
+                <li>не допускайте контакта с высокими температурами и не ставьте горячие предметы на поверхность, если изделие для этого не предназначено;</li>
+                <li>не используйте растворители, спирт, ацетон и средства с абразивными частицами;</li>
+                <li>берегите изделие от падений, царапин и контакта с острыми предметами;</li>
+                <li>удаляйте пыль мягкой сухой тканью из микрофибры.</li>
+              </ul>
+              <p><strong>Важно:</strong> не используйте жёсткие губки, металлические щётки и абразивные чистящие средства. У индивидуальных изделий могут быть особенности — если есть сомнения, напишите мне, и я подготовлю рекомендации по уходу.</p>
+            </div>
+          </details>
         </div>
       </section>
 
