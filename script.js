@@ -14,7 +14,73 @@ const orderCategory = document.querySelector("#order-category");
 const orderMessage = document.querySelector("#order-message");
 const formSuccess = document.querySelector("#form-success");
 const newRequest = document.querySelector("#new-request");
+const faqItems = [...document.querySelectorAll(".faq-item")];
+const worksTrack = document.querySelector("#works-track");
+const workSlides = [...document.querySelectorAll(".work-slide")];
+const worksCount = document.querySelector("#works-count");
+const workPrevious = document.querySelector("#work-prev");
+const workNext = document.querySelector("#work-next");
 let selectedProduct;
+let activeWork = 0;
+
+function animateFaqItem(item) {
+  const summary = item.querySelector("summary");
+  const isOpening = !item.open;
+  item.getAnimations().forEach((animation) => animation.cancel());
+
+  if (isOpening) {
+    item.open = true;
+    const collapsedHeight = summary.offsetHeight;
+    const expandedHeight = item.scrollHeight;
+    item.style.height = `${collapsedHeight}px`;
+    const animation = item.animate(
+      { height: [`${collapsedHeight}px`, `${expandedHeight}px`] },
+      { duration: 300, easing: "cubic-bezier(.22,.8,.32,1)" },
+    );
+    animation.onfinish = () => { item.style.height = ""; };
+    return;
+  }
+
+  const expandedHeight = item.offsetHeight;
+  const collapsedHeight = summary.offsetHeight;
+  item.style.height = `${expandedHeight}px`;
+  const animation = item.animate(
+    { height: [`${expandedHeight}px`, `${collapsedHeight}px`] },
+    { duration: 250, easing: "cubic-bezier(.4,0,.2,1)" },
+  );
+  animation.onfinish = () => {
+    item.open = false;
+    item.style.height = "";
+  };
+}
+
+faqItems.forEach((item) => {
+  item.querySelector("summary").addEventListener("click", (event) => {
+    event.preventDefault();
+    animateFaqItem(item);
+  });
+});
+
+function showWork(index) {
+  if (!worksTrack || !workSlides.length) return;
+  activeWork = (index + workSlides.length) % workSlides.length;
+  worksTrack.style.transform = `translateX(-${activeWork * 100}%)`;
+  worksCount.textContent = `${String(activeWork + 1).padStart(2, "0")} / ${String(workSlides.length).padStart(2, "0")}`;
+  workSlides.forEach((slide, slideIndex) => slide.setAttribute("aria-hidden", String(slideIndex !== activeWork)));
+}
+
+workPrevious?.addEventListener("click", () => showWork(activeWork - 1));
+workNext?.addEventListener("click", () => showWork(activeWork + 1));
+
+let touchStartX = 0;
+worksTrack?.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
+worksTrack?.addEventListener("touchend", (event) => {
+  const distance = event.changedTouches[0].screenX - touchStartX;
+  if (Math.abs(distance) < 45) return;
+  showWork(activeWork + (distance < 0 ? 1 : -1));
+}, { passive: true });
+
+showWork(0);
 
 function getProductDimensions(product) {
   if (product.dimensions) return { ...product.dimensions, depth: product.dimensions.depth ?? product.dimensions.length ?? "" };
