@@ -207,7 +207,7 @@ newRequest?.addEventListener("click", () => {
 });
 
 if (grid) {
-  fetch("data/catalog.json")
+  fetch(`data/catalog.json?v=${Date.now()}`, { cache: "no-store" })
     .then((response) => {
       if (!response.ok) throw new Error(`Каталог недоступен: ${response.status}`);
       return response.json();
