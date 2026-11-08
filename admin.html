@@ -22,8 +22,15 @@
           <h1>Ассортимент<br />под контролем</h1>
         </div>
         <div class="intro-note">
-          <p id="auth-status">Войдите через GitHub, чтобы загрузить каталог и сохранить изменения на сайте.</p>
-          <button class="secondary-button" id="auth-button" type="button">Войти через GitHub</button>
+          <p id="auth-status">Войдите, чтобы загрузить каталог и сохранить изменения на сайте.</p>
+          <form class="login-form" id="login-form">
+            <div class="login-fields" id="login-fields">
+              <label>Логин<input id="admin-username" autocomplete="username" required /></label>
+              <label>Пароль<input id="admin-password" type="password" autocomplete="current-password" required /></label>
+            </div>
+            <button class="secondary-button" id="login-button" type="submit">Войти</button>
+            <button class="secondary-button" id="logout-button" type="button" hidden>Выйти</button>
+          </form>
         </div>
       </section>
 

@@ -1,10 +1,7 @@
 // @ts-nocheck
 
-const AUTH_BASE = "https://resindart-cms-auth.jelydade-resindart.workers.dev";
-const REPOSITORY = "Jelydade/ResiNDart";
-const BRANCH = "main";
-const CATALOG_PATH = "data/catalog.json";
-const SESSION_KEY = "resindart-github-token";
+const API_BASE = "https://resindart-catalog-api.jelydade-resindart.workers.dev";
+const SESSION_KEY = "resindart-admin-session";
 const categoryNames = { clock: "Часы", decor: "Посуда и декор", table: "Столы", art: "Картины" };
 const statusNames = { available: "В наличии", order: "Под заказ" };
 
@@ -24,7 +21,10 @@ const imageValue = document.querySelector("#image");
 const imagePreview = document.querySelector("#image-preview");
 const removeImageButton = document.querySelector("#remove-image");
 const dimensionToggles = document.querySelectorAll("[data-dimension-toggle]");
-const authButton = document.querySelector("#auth-button");
+const loginForm = document.querySelector("#login-form");
+const loginFields = document.querySelector("#login-fields");
+const loginButton = document.querySelector("#login-button");
+const logoutButton = document.querySelector("#logout-button");
 const authStatus = document.querySelector("#auth-status");
 let toastTimer;
 
@@ -59,48 +59,29 @@ function escapeHtml(value = "") {
   return String(value).replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
 }
 
-function apiPath(path) {
-  return path.split("/").map(encodeURIComponent).join("/");
-}
-
-async function githubRequest(path, options = {}) {
-  const response = await fetch(`https://api.github.com/repos/${REPOSITORY}/contents/${apiPath(path)}`, {
+async function apiRequest(path, options = {}) {
+  const response = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${getToken()}`,
-      "X-GitHub-Api-Version": "2022-11-28",
+      Authorization: getToken() ? `Bearer ${getToken()}` : "",
+      "Content-Type": "application/json",
       ...options.headers,
     },
     cache: "no-store",
   });
 
-  if (response.status === 401) {
+  if (response.status === 401 && getToken()) {
     sessionStorage.removeItem(SESSION_KEY);
     setLoggedOut("Сессия истекла. Войдите ещё раз.");
-    throw new Error("Сессия GitHub истекла");
+    throw new Error("Сессия истекла");
   }
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
-    throw new Error(error.message || `GitHub вернул ошибку ${response.status}`);
+    throw new Error(error.message || `Сервер вернул ошибку ${response.status}`);
   }
 
   return response.json();
-}
-
-function decodeBase64(value) {
-  const bytes = Uint8Array.from(atob(value.replace(/\n/g, "")), (character) => character.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
-
-function encodeBase64(value) {
-  const bytes = new TextEncoder().encode(value);
-  let binary = "";
-  for (let offset = 0; offset < bytes.length; offset += 0x8000) {
-    binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
-  }
-  return btoa(binary);
 }
 
 function fileToBase64(file) {
@@ -112,19 +93,23 @@ function fileToBase64(file) {
   });
 }
 
-function setLoggedOut(message = "Войдите через GitHub, чтобы загрузить каталог и сохранить изменения на сайте.") {
+function setLoggedOut(message = "Войдите, чтобы загрузить каталог и сохранить изменения на сайте.") {
   products = [];
   catalogSha = "";
   list.innerHTML = '<p class="empty-state">Каталог станет доступен после входа.</p>';
   document.querySelector("#product-count").textContent = "0";
   authStatus.textContent = message;
-  authButton.textContent = "Войти через GitHub";
+  loginFields.hidden = false;
+  loginButton.hidden = false;
+  logoutButton.hidden = true;
   setInterfaceEnabled(false);
 }
 
 function setLoggedIn() {
-  authStatus.textContent = "Каталог подключён к сайту. Сохранённые изменения появятся в магазине после публикации GitHub Pages.";
-  authButton.textContent = "Выйти";
+  authStatus.textContent = "Каталог подключён. Сохранённые изменения появятся на сайте после публикации.";
+  loginFields.hidden = true;
+  loginButton.hidden = true;
+  logoutButton.hidden = false;
   setInterfaceEnabled(true);
   dimensionToggles.forEach((toggle) => {
     document.querySelector(`#${toggle.dataset.dimensionToggle}`).disabled = !toggle.checked;
@@ -133,11 +118,10 @@ function setLoggedIn() {
 
 async function loadCatalog() {
   authStatus.textContent = "Загружаю каталог…";
-  const file = await githubRequest(CATALOG_PATH);
-  const catalog = JSON.parse(decodeBase64(file.content));
+  const catalog = await apiRequest("/catalog");
   if (!Array.isArray(catalog.products)) throw new Error("Неверный формат каталога");
 
-  catalogSha = file.sha;
+  catalogSha = catalog.sha;
   products = catalog.products.map((product, index) => ({
     ...product,
     id: Number(product.id) || index + 1,
@@ -148,18 +132,16 @@ async function loadCatalog() {
 }
 
 async function saveProducts(message) {
-  const result = await githubRequest(CATALOG_PATH, {
+  const result = await apiRequest("/catalog", {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       message,
-      branch: BRANCH,
       sha: catalogSha,
-      content: encodeBase64(JSON.stringify({ products }, null, 2) + "\n"),
+      products,
     }),
   });
 
-  catalogSha = result.content.sha;
+  catalogSha = result.sha;
   renderProducts();
 }
 
@@ -173,69 +155,45 @@ function sanitizeFileName(name) {
 async function uploadSelectedImage() {
   if (!selectedImageFile) return imageValue.value;
 
-  const fileName = sanitizeFileName(selectedImageFile.name);
-  const path = `assets/products/${fileName}`;
-  await githubRequest(path, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
+  const result = await apiRequest("/image", {
+    method: "POST",
     body: JSON.stringify({
-      message: `Upload product image ${fileName}`,
-      branch: BRANCH,
+      name: sanitizeFileName(selectedImageFile.name),
       content: await fileToBase64(selectedImageFile),
     }),
   });
 
   selectedImageFile = null;
-  return `/ResiNDart/${path}`;
+  return result.path;
 }
 
-function startLogin() {
-  const popup = window.open(
-    `${AUTH_BASE}/auth?provider=github&site_id=${encodeURIComponent(location.hostname)}`,
-    "resindart-github-login",
-    "width=720,height=760"
-  );
-  if (!popup) showToast("Браузер заблокировал окно входа. Разрешите всплывающие окна.", "error");
-}
-
-window.addEventListener("message", (event) => {
-  if (event.origin !== AUTH_BASE || typeof event.data !== "string") return;
-
-  if (event.data === "authorizing:github") {
-    event.source?.postMessage("authorizing:github", event.origin);
-    return;
-  }
-
-  const prefix = "authorization:github:success:";
-  if (!event.data.startsWith(prefix)) {
-    if (event.data.startsWith("authorization:github:error:")) {
-      showToast("Не удалось войти через GitHub.", "error");
-    }
-    return;
-  }
-
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  loginButton.disabled = true;
   try {
-    const { token } = JSON.parse(event.data.slice(prefix.length));
-    if (!token) throw new Error("GitHub не вернул токен");
-    sessionStorage.setItem(SESSION_KEY, token);
-    event.source?.close();
-    loadCatalog().catch((error) => {
-      setLoggedOut();
-      showToast(error.message, "error");
+    const { token } = await apiRequest("/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username: document.querySelector("#admin-username").value,
+        password: document.querySelector("#admin-password").value,
+      }),
     });
+    sessionStorage.setItem(SESSION_KEY, token);
+    document.querySelector("#admin-password").value = "";
+    await loadCatalog();
   } catch (error) {
+    sessionStorage.removeItem(SESSION_KEY);
+    setLoggedOut();
     showToast(error.message, "error");
+  } finally {
+    loginButton.disabled = false;
   }
 });
 
-authButton.addEventListener("click", () => {
-  if (getToken()) {
-    sessionStorage.removeItem(SESSION_KEY);
-    resetForm();
-    setLoggedOut();
-    return;
-  }
-  startLogin();
+logoutButton.addEventListener("click", () => {
+  sessionStorage.removeItem(SESSION_KEY);
+  resetForm();
+  setLoggedOut();
 });
 
 function showImagePreview(source = "") {

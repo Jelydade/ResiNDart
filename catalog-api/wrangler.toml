@@ -1,0 +1,19 @@
+name = "resindart-catalog-api"
+main = "worker.js"
+compatibility_date = "2026-11-08"
+
+[vars]
+ALLOWED_ORIGIN = "https://jelydade.github.io"
+GITHUB_OWNER = "Jelydade"
+GITHUB_REPO = "ResiNDart"
+GITHUB_BRANCH = "main"
+CATALOG_PATH = "data/catalog.json"
+
+[[ratelimits]]
+name = "LOGIN_RATE_LIMITER"
+namespace_id = "2001"
+
+[ratelimits.simple]
+limit = 5
+period = 60
+
