@@ -1,0 +1,46 @@
+backend:
+  name: github
+  repo: Jelydade/ResiNDart
+  branch: main
+  base_url: https://resindart-cms-auth.jelydade-resindart.workers.dev
+  auth_endpoint: /auth
+
+media_folder: assets/products
+public_folder: /ResiNDart/assets/products
+
+collections:
+  - name: catalog
+    label: Каталог
+    files:
+      - name: products
+        label: Товары
+        file: data/catalog.json
+        format: json
+        fields:
+          - name: products
+            label: Товары
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name, label: Название, widget: string }
+              - { name: published, label: Показывать на сайте, widget: boolean, default: true }
+              - name: category
+                label: Категория
+                widget: select
+                options:
+                  - { label: Часы, value: clock }
+                  - { label: Посуда и декор, value: decor }
+                  - { label: Столы, value: table }
+                  - { label: Картины, value: art }
+              - name: status
+                label: Статус
+                widget: select
+                options:
+                  - { label: В наличии, value: available }
+                  - { label: Под заказ, value: order }
+              - { name: price, label: Цена, widget: string }
+              - { name: size, label: Размеры, widget: string, required: false }
+              - { name: time, label: Срок изготовления, widget: string, required: false }
+              - { name: image, label: Фото, widget: image, required: false }
+              - { name: imageAlt, label: Описание фото, widget: string, required: false }
+              - { name: description, label: Описание, widget: text }

@@ -1,7 +1,12 @@
 // @ts-nocheck
 
-const storedProducts = localStorage.getItem("resindart-products");
-const products = storedProducts ? JSON.parse(storedProducts) : (window.RESINDART_PRODUCTS ?? []);
+let products = [];
+const categoryNames = { clock: "Часы", decor: "Посуда и декор", table: "Столы", art: "Картины" };
+const statusNames = { available: "В наличии", order: "Под заказ" };
+
+function escapeHtml(value = "") {
+  return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+}
 
 const grid = document.querySelector("#product-grid");
 const count = document.querySelector("#catalog-count");
@@ -107,27 +112,28 @@ function productDimensions(product) {
 
   return `
     <span class="product-dimensions">
-      ${items.map((item) => `<span class="dimension-item" aria-label="${item.label}: ${dimensions[item.key]} сантиметров"><svg viewBox="0 0 16 16" aria-hidden="true">${item.icon}</svg><span>${dimensions[item.key]}</span></span>`).join("")}
+      ${items.map((item) => `<span class="dimension-item" aria-label="${item.label}: ${escapeHtml(dimensions[item.key])} сантиметров"><svg viewBox="0 0 16 16" aria-hidden="true">${item.icon}</svg><span>${escapeHtml(dimensions[item.key])}</span></span>`).join("")}
       <span class="dimensions-help" aria-label="Подробные габариты товара">i
         <span class="dimensions-tooltip" role="tooltip">
-          ${items.map((item) => `<span>${item.label}: ${dimensions[item.key]} см</span>`).join("")}
+          ${items.map((item) => `<span>${item.label}: ${escapeHtml(dimensions[item.key])} см</span>`).join("")}
         </span>
       </span>
     </span>`;
 }
 
 function productCard(product) {
+  const image = escapeHtml(product.image);
   return `
-    <button class="product-card" type="button" data-id="${product.id}" aria-label="Подробнее: ${product.name}">
+    <button class="product-card" type="button" data-id="${product.id}" aria-label="Подробнее: ${escapeHtml(product.name)}">
       <div class="product-visual${product.image ? " has-photo" : ""}">
-        <span class="product-status" data-status="${product.status}">${product.statusName}</span>
-        ${product.image ? `<img src="${product.image}" alt="${product.imageAlt}" />` : "<span>Фото готовится</span>"}
+        <span class="product-status" data-status="${escapeHtml(product.status)}">${escapeHtml(statusNames[product.status])}</span>
+        ${product.image ? `<img src="${image}" alt="${escapeHtml(product.imageAlt || product.name)}" />` : "<span>Фото готовится</span>"}
       </div>
       <div class="product-info">
-        <div class="product-meta"><span>${product.categoryName}</span>${productDimensions(product)}</div>
-        <h3>${product.name}</h3>
-        <p>${product.description}</p>
-        <div class="product-bottom"><span class="product-price">${product.price}</span><span class="product-more">Подробнее</span></div>
+        <div class="product-meta"><span>${escapeHtml(categoryNames[product.category])}</span>${productDimensions(product)}</div>
+        <h3>${escapeHtml(product.name)}</h3>
+        <p>${escapeHtml(product.description)}</p>
+        <div class="product-bottom"><span class="product-price">${escapeHtml(product.price)}</span><span class="product-more">Подробнее</span></div>
       </div>
     </button>`;
 }
@@ -145,14 +151,14 @@ function openProduct(product) {
   const dialogVisual = document.querySelector("#dialog-visual");
   dialogVisual.classList.toggle("has-photo", Boolean(product.image));
   dialogVisual.innerHTML = product.image
-    ? `<img src="${product.image}" alt="${product.imageAlt}" />`
+    ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.imageAlt || product.name)}" />`
     : "<span>Фото готовится</span>";
-  document.querySelector("#dialog-category").textContent = product.categoryName;
+  document.querySelector("#dialog-category").textContent = categoryNames[product.category];
   document.querySelector("#dialog-title").textContent = product.name;
   document.querySelector("#dialog-description").textContent = product.description;
   document.querySelector("#dialog-size").textContent = product.size;
   document.querySelector("#dialog-time").textContent = product.time;
-  document.querySelector("#dialog-status").textContent = product.statusName;
+  document.querySelector("#dialog-status").textContent = statusNames[product.status];
   document.querySelector("#dialog-price").textContent = product.price;
   dialog.showModal();
 }
@@ -200,4 +206,19 @@ newRequest?.addEventListener("click", () => {
   orderForm.elements.name.focus();
 });
 
-render();
+if (grid) {
+  fetch("data/catalog.json")
+    .then((response) => {
+      if (!response.ok) throw new Error(`Каталог недоступен: ${response.status}`);
+      return response.json();
+    })
+    .then((catalog) => {
+      if (!Array.isArray(catalog.products)) throw new Error("Неверный формат каталога");
+      products = catalog.products.map((product, index) => ({ ...product, id: index + 1 }));
+      render(filters.find((filter) => filter.classList.contains("is-active"))?.dataset.filter);
+    })
+    .catch(() => {
+      grid.textContent = "Не удалось загрузить каталог. Обновите страницу позже.";
+      count.textContent = "0";
+    });
+}

@@ -1,0 +1,7 @@
+name = "resindart-cms-auth"
+main = "worker.js"
+compatibility_date = "2023-03-24"
+
+[vars]
+GITHUB_CLIENT_ID = "Ov23liJT0znkIosVU3FT"
+ALLOWED_DOMAINS = "jelydade.github.io"
