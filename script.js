@@ -193,3 +193,9 @@ if (grid) {
       count.textContent = "0";
     });
 }
+const phoneReveal = document.querySelector(".phone-reveal");
+phoneReveal?.addEventListener("click", () => {
+  document.querySelector("#contact-number").hidden = false;
+  phoneReveal.setAttribute("aria-expanded", "true");
+  phoneReveal.remove();
+});
