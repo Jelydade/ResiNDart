@@ -6,7 +6,7 @@ backend:
   auth_endpoint: /auth
 
 media_folder: assets/products
-public_folder: /ResiNDart/assets/products
+public_folder: /assets/products
 
 collections:
   - name: catalog

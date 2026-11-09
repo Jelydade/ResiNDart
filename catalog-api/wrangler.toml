@@ -3,7 +3,7 @@ main = "worker.js"
 compatibility_date = "2026-11-08"
 
 [vars]
-ALLOWED_ORIGIN = "https://jelydade.github.io"
+ALLOWED_ORIGIN = "https://resindart.ru"
 GITHUB_OWNER = "Jelydade"
 GITHUB_REPO = "ResiNDart"
 GITHUB_BRANCH = "main"

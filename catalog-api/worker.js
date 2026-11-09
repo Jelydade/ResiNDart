@@ -164,7 +164,7 @@ function normalizeProduct(product) {
   if (typeof product.published !== "boolean") throw new InputError("Неверное значение публикации");
 
   const image = cleanString(product.image ?? "", "Фото", 500);
-  if (image && !image.startsWith("assets/") && !image.startsWith("/ResiNDart/assets/")) {
+  if (image && !image.startsWith("assets/") && !image.startsWith("/assets/products/") && !image.startsWith("/ResiNDart/assets/")) {
     throw new InputError("Недопустимый путь к фотографии");
   }
 
@@ -274,7 +274,7 @@ async function handleImage(request, env) {
       content: body.content,
     }),
   });
-  return json(request, env, { path: `/ResiNDart/${repositoryPath}` });
+  return json(request, env, { path: `/${repositoryPath}` });
 }
 
 export default {

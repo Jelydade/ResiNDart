@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import worker from "./worker.js";
 
-const origin = "https://jelydade.github.io";
+const origin = "https://resindart.ru";
 const env = {
   ALLOWED_ORIGIN: origin,
   ADMIN_USERNAME: "daria",
