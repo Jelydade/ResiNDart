@@ -2,6 +2,7 @@
 
 const API_BASE = "https://resindart-catalog-api.jelydade-resindart.workers.dev";
 const SESSION_KEY = "resindart-admin-session";
+const ADMIN_NAME_KEY = "resindart-admin-name";
 const categoryNames = { clock: "Часы", decor: "Посуда и декор", table: "Столы", art: "Картины" };
 const statusNames = { available: "В наличии", order: "Под заказ" };
 
@@ -30,6 +31,10 @@ let toastTimer;
 
 function getToken() {
   return sessionStorage.getItem(SESSION_KEY);
+}
+
+function getAdminName() {
+  return sessionStorage.getItem(ADMIN_NAME_KEY) || "администратор";
 }
 
 function setInterfaceEnabled(enabled) {
@@ -72,6 +77,7 @@ async function apiRequest(path, options = {}) {
 
   if (response.status === 401 && getToken()) {
     sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(ADMIN_NAME_KEY);
     setLoggedOut("Сессия истекла. Войдите ещё раз.");
     throw new Error("Сессия истекла");
   }
@@ -106,7 +112,7 @@ function setLoggedOut(message = "Войдите, чтобы загрузить �
 }
 
 function setLoggedIn() {
-  authStatus.textContent = "Каталог подключён. Сохранённые изменения появятся на сайте после публикации.";
+  authStatus.innerHTML = `Вы авторизованы как <span class="authorized-user">${escapeHtml(getAdminName())}</span>. Сохранённые изменения появятся на сайте после публикации.`;
   loginFields.hidden = true;
   loginButton.hidden = true;
   logoutButton.hidden = false;
@@ -179,6 +185,7 @@ loginForm.addEventListener("submit", async (event) => {
       }),
     });
     sessionStorage.setItem(SESSION_KEY, token);
+    sessionStorage.setItem(ADMIN_NAME_KEY, document.querySelector("#admin-username").value.trim());
     document.querySelector("#admin-password").value = "";
     await loadCatalog();
   } catch (error) {
@@ -192,6 +199,7 @@ loginForm.addEventListener("submit", async (event) => {
 
 logoutButton.addEventListener("click", () => {
   sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(ADMIN_NAME_KEY);
   resetForm();
   setLoggedOut();
 });
