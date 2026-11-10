@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /cms/
+
+Sitemap: https://resindart.ru/sitemap.xml
