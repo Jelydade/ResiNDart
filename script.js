@@ -16,6 +16,7 @@ const closeButton = dialog?.querySelector(".dialog-close");
 const discussOrder = document.querySelector("#discuss-order");
 const faqItems = [...document.querySelectorAll(".faq-item")];
 const worksTrack = document.querySelector("#works-track");
+const worksViewport = document.querySelector(".works-viewport");
 const workSlides = [...document.querySelectorAll(".work-slide")];
 const worksCount = document.querySelector("#works-count");
 const workPrevious = document.querySelector("#work-prev");
@@ -71,13 +72,18 @@ function showWork(index) {
 workPrevious?.addEventListener("click", () => showWork(activeWork - 1));
 workNext?.addEventListener("click", () => showWork(activeWork + 1));
 
-let touchStartX = 0;
-worksTrack?.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
-worksTrack?.addEventListener("touchend", (event) => {
-  const distance = event.changedTouches[0].screenX - touchStartX;
+let swipeStartX = null;
+worksViewport?.addEventListener("pointerdown", (event) => {
+  if (event.pointerType === "touch") swipeStartX = event.clientX;
+});
+worksViewport?.addEventListener("pointerup", (event) => {
+  if (swipeStartX === null || event.pointerType !== "touch") return;
+  const distance = event.clientX - swipeStartX;
+  swipeStartX = null;
   if (Math.abs(distance) < 45) return;
   showWork(activeWork + (distance < 0 ? 1 : -1));
-}, { passive: true });
+});
+worksViewport?.addEventListener("pointercancel", () => { swipeStartX = null; });
 
 showWork(0);
 
