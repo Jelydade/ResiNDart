@@ -1,6 +1,19 @@
 {
   "products": [
     {
+      "id": 3,
+      "published": true,
+      "category": "table",
+      "name": "Глубокое море",
+      "status": "order",
+      "price": "44000 р.",
+      "size": "В 100 × Ш 50 × Г 50 см",
+      "time": "3-5 дней",
+      "image": "",
+      "imageAlt": "Глубокое море",
+      "description": "123"
+    },
+    {
       "id": 1,
       "published": true,
       "category": "clock",
